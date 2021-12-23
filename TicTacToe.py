@@ -1,7 +1,9 @@
 import random
 tabuleiro = []
+nj = ''
 
 def criar_tabuleiro():
+        
         for i in range(3):
             row = []
             for j in range(3):
@@ -81,9 +83,15 @@ def mostrar_tabuleiro():
                 print(item, end=" ")
             print()
 
+def limpar_tabuleiro():
+    tabuleiro.clear()
+
+
+
 def start():
+        
         criar_tabuleiro()
-        print("Modos de jogo:")
+        print("Modos de jogo:\n")
         print("1. Jogar com outro jogador")
         print("2. Jogar sozinho com o computador")
         print()
@@ -101,7 +109,9 @@ def start():
 
         if (modo_de_jogo == 1):
             jogadorX = input("Introduza o nome do Player 1 (X): ")
+            print()
             jogadorO = input("Introduza o nome do Player 2 (O): ")
+            print()
             player = 'X' if primeiro_jogador() == 1 else 'O'
             while True:
                 if (player == 'X'):
@@ -119,7 +129,7 @@ def start():
                     linha_valida = False
                     while not linha_valida:
                         try:
-                            linha = int(input("Introduza o número da linha em que pretende colocar a peça: "))
+                            linha = int(input("Introduza o nº da linha em que pretende colocar a peça: "))
                             print()
                             if linha >= 4 or linha <= 0:
                                 raise Exception
@@ -135,7 +145,7 @@ def start():
                     coluna_valida = False
                     while not coluna_valida:
                         try: 
-                            coluna = int(input("Introduza o número da coluna em que pretende colocar a peça: "))
+                            coluna = int(input("Introduza o nº da coluna em que pretende colocar a peça: "))
                             print()
                             if coluna >= 4 or coluna <= 0:
                                 raise Exception
@@ -168,13 +178,26 @@ def start():
                                 print()
                                 mostrar_tabuleiro()
                                 print()
-                                return
+                                nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                if nj == 'S':
+                                    limpar_tabuleiro()
+                                    start()
+                                else:
+                                    print("Adeus!")
+                                    return
                             else:
                                 print(f"{jogadorO} ganhou o jogo! :)")
                                 print()
                                 mostrar_tabuleiro()
                                 print()
-                                return
+                                nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                if nj == 'S':
+                                    limpar_tabuleiro()
+                                    start()
+                                else:
+                                    print("Adeus!")
+                                    return
+                               
 
                        
                         if tabuleiro_completo():
@@ -182,7 +205,13 @@ def start():
                             print()
                             mostrar_tabuleiro()
                             print()
-                            break
+                            nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                            if nj == 'S':
+                                limpar_tabuleiro()
+                                start()
+                            else:
+                                print("Adeus!")
+                                break
 
                         
                         player = trocar_jogador(player)
@@ -192,7 +221,7 @@ def start():
             while not peca_valida:
                 try:
                     jogador = str(input("Que peças pretende (X ou O): ")).upper()
-                    print(jogador)
+                    
                     if jogador != 'X' and jogador != 'O':
                         raise Exception()
                 except Exception:
@@ -215,7 +244,7 @@ def start():
                         linha_valida = False
                         while not linha_valida:
                             try:
-                                linha = int(input("Introduza o número da linha em que pretende colocar a peça: "))
+                                linha = int(input("Introduza o nº da linha em que pretende colocar a peça: "))
                                 print()
                                 if linha >= 4 or linha <= 0:
                                     raise Exception
@@ -230,7 +259,7 @@ def start():
                         coluna_valida = False
                         while not coluna_valida:
                             try: 
-                                coluna = int(input("Introduza o número da coluna em que pretende colocar a peça: "))
+                                coluna = int(input("Introduza o nº da coluna em que pretende colocar a peça: "))
                                 print()
                                 if coluna >= 4 or coluna <= 0:
                                     raise Exception
@@ -261,20 +290,38 @@ def start():
                                     print()
                                     mostrar_tabuleiro()
                                     print()
-                                    return
+                                    nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                    if nj == 'S':
+                                        limpar_tabuleiro()
+                                        start()
+                                    else:
+                                        print("Adeus!")
+                                        return
                                 else:
                                     print(f"Perdeu o jogo! :(")
                                     print()
                                     mostrar_tabuleiro()
                                     print()
-                                    return
-
+                                    nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                    if nj == 'S':
+                                        limpar_tabuleiro()
+                                        start()
+                                    else:
+                                        print("Adeus!")
+                                        return
                             if tabuleiro_completo():
                                 print("Empate!")
                                 print()
                                 mostrar_tabuleiro()
                                 print()
-                                break
+                                nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                if nj == 'S':
+                                    limpar_tabuleiro()
+                                    start()
+                                else:
+                                    print("Adeus!")
+                                    break
+
                             player = trocar_jogador(player)    
                 else:
                     print(f"Turno do computador")
@@ -286,14 +333,14 @@ def start():
                     while not valido:
                         row, col = list(
                             map(int, [random.randint(1, 3), random.randint(1, 3)]))
-                        print()
+                      
                         try:
                             x = posicionar(row - 1, col - 1, player)
-                            print()
+                         
                             if x == False:
                                 raise Exception()
                         except Exception:
-                            print(2)
+                            print()
                         else:
                             valido = True
 
@@ -303,20 +350,38 @@ def start():
                                     print()
                                     mostrar_tabuleiro()
                                     print()
-                                    return
+                                    nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                    if nj == 'S':
+                                        limpar_tabuleiro()
+                                        start()
+                                    else:
+                                        print("Adeus!")
+                                        return
                                 else:
                                     print(f"Perdeu o jogo! :(")
                                     print()
                                     mostrar_tabuleiro()
                                     print()
-                                    return
+                                    nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                    if nj == 'S':
+                                        limpar_tabuleiro()
+                                        start()
+                                    else:
+                                        print("Adeus!")
+                                        return
 
                             if tabuleiro_completo():
                                 print("Empate!")
                                 print()
                                 mostrar_tabuleiro()
                                 print()
-                                break
+                                nj =  input("Deseja começar um novo jogo (S/N)? ").upper()  
+                                if nj == 'S':
+                                    limpar_tabuleiro()
+                                    start()
+                                else:
+                                    print("Adeus!")
+                                    break
                             player = trocar_jogador(player)
 
 
